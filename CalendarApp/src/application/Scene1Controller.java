@@ -24,9 +24,9 @@ public class Scene1Controller {
 		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
 		String username = nameTextField.getText();
 		
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
 		root = loader.load();
-		
 		Scene2Controller scene2Controller = loader.getController();
 		
 		scene2Controller.displayName(username);
