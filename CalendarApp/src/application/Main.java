@@ -9,6 +9,12 @@ import javafx.stage.Stage;
 public class Main extends Application{
  
 	public static void main(String[] args){
+		
+		//Users
+		User CortlandB = new User("smoothcjb", "password1");
+		User DiyaP = new User("diyap1234", "password2");
+		User XinhaoX = new User("xxh1234", "password3");
+	
 		launch(args);
 	}
 	
