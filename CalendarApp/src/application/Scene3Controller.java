@@ -28,7 +28,12 @@ public class Scene3Controller {
     private Button backToCalendar;
     
    
-
+/*
+ * handleAddEvent ask user to input a date with date picker and write a message for event detail. this should add an event to
+ * the calendar view.
+ * 
+ * What to work on: right now this is only output an console print out. a proper data structure is needed to store the data.
+ */
     public void handleAddEvent() {
         if (datePicker.getValue() == null || eventField.getText().isEmpty()) {
             statusLabel.setText("Please select a date and enter event details.");
@@ -44,8 +49,14 @@ public class Scene3Controller {
         }
 
     }
+    
+    /*
+     * function goBackToCalendar takes user back to the calendar view after a button is pressed
+     */
+    
     public void goBackToCalendar(ActionEvent event) throws IOException {
-    	System.out.println("Back button clicked!");
+    	
+    	//System.out.println("Back button clicked!");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
         Parent root = loader.load();
 

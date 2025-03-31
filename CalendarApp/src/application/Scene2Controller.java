@@ -16,10 +16,17 @@ public class Scene2Controller {
 	@FXML
 	Label nameLabel;
 	
+	/*
+	 * displayName function gets username data from scene1 and display it at the right bottom coner in scene2
+	 * which states hello (their username)
+	 */
 	public void displayName(String username) {
 		
 		nameLabel.setText("Hello: "+ username );
 	}
+	/*
+	 * addEvent functon takes button press on the add event button and switch to scene3.
+	 */
 	public void addEvent(ActionEvent event) throws IOException {
 		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
 		//Scene3Controller scene3Controller = loader.getController();
