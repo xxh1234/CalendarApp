@@ -35,6 +35,7 @@ public class Scene3Controller {
         } else {
             String selectedDate = datePicker.getValue().toString();
             String event = eventField.getText();
+            
 
             
             System.out.println("Event on " + selectedDate + ": " + event);
@@ -51,6 +52,7 @@ public class Scene3Controller {
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

@@ -39,14 +39,18 @@ public class Scene1Controller {
 		Boolean validPassword = User.userMap.containsValue(password);
 			
 	  if(validUser & validPassword) {
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
+		
 		root = loader.load();
+		
 		Scene2Controller scene2Controller = loader.getController();
 		
 		scene2Controller.displayName(username);
 			
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();			
 	}
