@@ -11,8 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Scene2Controller">
    <children>
-      <Button fx:id="previousMonthButton" layoutX="379.0" layoutY="41.0" mnemonicParsing="false" onAction="#previousMonthButton" text="previous month" />
-      <Button fx:id="nextMonthButton" layoutX="745.0" layoutY="41.0" mnemonicParsing="false" onAction="#nextMonthButton" text="next month" />
+      <Button fx:id="previousMonthButton" layoutX="379.0" layoutY="41.0" mnemonicParsing="false" onAction="#previousMonthButton" text="Previous month" />
+      <Button fx:id="nextMonthButton" layoutX="745.0" layoutY="41.0" mnemonicParsing="false" onAction="#nextMonthButton" text="Next month" />
       <GridPane fx:id="calendarPane" gridLinesVisible="true" hgap="2.0" layoutX="208.0" layoutY="138.0" prefHeight="600.0" prefWidth="800.0" vgap="2.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="208.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="138.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

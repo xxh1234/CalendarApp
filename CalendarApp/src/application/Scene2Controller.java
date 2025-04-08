@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -91,6 +92,12 @@ public class Scene2Controller {
 
 	        //add events here
 	        
+	        dayButton.setOnAction(new buttonHandlerClass(buttonDate));
+	        
+	        
+	        System.out.println("today is = " + buttonDate.toString());
+	        
+	        
 	        //change color to differ even and odd dates.
 	        if(column%2 != 0) {
 	        	dayButton.setStyle("-fx-background-color: #eae8e4; ");
@@ -119,6 +126,20 @@ public class Scene2Controller {
 	    monthLabel.setText(yearMonth.getMonth() + " " + yearMonth.getYear());
 	}
 	
+	class buttonHandlerClass implements EventHandler<ActionEvent>{
+		private LocalDate date;
+		
+		public buttonHandlerClass(LocalDate date) {
+			this.date = date;
+		}
+		@Override
+		public void handle(ActionEvent event) {
+			System.out.println("button clicked" + date);
+			
+		}
+		
+	}
+	
 	//displayName isn't functioning 04/03.
 	public void displayName(String username) {
 		
@@ -142,7 +163,6 @@ public class Scene2Controller {
 		//loader returns the root node
 		Parent root = loader.load();
 		//cast the button event to node then get the current scene of the current event
-		//then we get the 
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		//creates an new scene
 		Scene scene = new Scene(root);
