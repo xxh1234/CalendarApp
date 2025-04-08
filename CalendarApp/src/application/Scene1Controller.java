@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ public class Scene1Controller {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	static Stack <String> userStack = new Stack<>();
 	
 	public void login(ActionEvent event) throws IOException {
 		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));

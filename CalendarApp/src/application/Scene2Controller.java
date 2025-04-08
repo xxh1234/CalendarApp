@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+
 import java.net.URL;
 
 import javafx.event.ActionEvent;
@@ -26,9 +27,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class Scene2Controller implements Event {
-	//
-	static Map<String, Set<String>> eventMap = new HashMap<>();
-
+	
 	@FXML 
 	private DatePicker datePicker;
 	
@@ -183,21 +182,21 @@ public class Scene2Controller implements Event {
 		todayLabel.setText(LocalDate.now().toString());
 		
 	}
-//  @Override
+	static Map<String, Set<String>> eventMap = new HashMap<>();
+    @Override
     public void addEvent() {
     //  String eventDate = datePicker.getValue().toString();
       LocalDate date = datePicker.getValue();
       String eventDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
       String eventTitle = eventField.getText();
-     // String username = Scene1Controller.userStack.peek();
+      String username = Scene1Controller.userStack.peek();
       String event = (eventDate + ": " + eventTitle);
-   //   addToSet(eventMap,username,event);
-   //   statusLabel.setText(event);
+      addToSet(eventMap,username,event);
+      statusLabel.setText(event);
       eventField.clear();
-      //
     //  myEvents.add(event);
      // System.out.println(myEvents);
-      System.out.println("Date: " + date);
+     // System.out.println("Date: " + date);
      }   
    
  /*  @Override
@@ -212,13 +211,12 @@ public class Scene2Controller implements Event {
 		   System.out.println("No events to display");
 	   } */
 
-	@Override
+	//@Override
 	public void removeEvent() {
 		// TODO Auto-generated method stub
 		
 	}
 		
-	
  	public void addToSet(Map<String, Set<String>> map, String key, String element){
   		 
   		 if (map.containsKey(key)) {

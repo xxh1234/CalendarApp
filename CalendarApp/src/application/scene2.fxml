@@ -54,7 +54,7 @@
          </font>
       </Text>
       <TextField fx:id="eventField" layoutX="949.0" layoutY="261.0" prefHeight="25.0" prefWidth="174.0" promptText="Event details" />
-      <Button layoutX="977.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleAddEvent" text="Click to add event!" />
+      <Button layoutX="977.0" layoutY="334.0" mnemonicParsing="false" onAction="#addEvent" text="Click to add event!" />
       <Label fx:id="statusLabel" layoutX="947.0" layoutY="306.0" />
    </children>
 </AnchorPane>
