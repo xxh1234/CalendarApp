@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +18,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 public class Scene2Controller {
 	
@@ -174,6 +181,48 @@ public class Scene2Controller {
 		todayLabel.setText(LocalDate.now().toString());
 		
 	}
+//  @Override
+  /* public void addEvent() {
+    //  String eventDate = datePicker.getValue().toString();
+      LocalDate date = datePicker.getValue();
+      String eventDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+      String eventTitle = eventField.getText();
+      String username = Scene1Controller.userStack.peek();
+      String event = (eventDate + ": " + eventTitle);
+      addToSet(eventMap,username,event);
+   //   statusLabel.setText(event);
+      eventField.clear();
+      //
+      myEvents.add(event);
+      System.out.println(myEvents);
+      System.out.println("Date: " + date);
+     }   
+   
+ /*  @Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+	   
+	// eventView.getItems().addAll(myEvents);
+	// eventView.getItems().add(result);
+	// System.out.println(eventList[0]);
+	 }
+	   
+	/*   if (list[0] == null) {  
+		   System.out.println("No events to display");
+	   } */
+		
+	
+ /* 	public void addToSet(Map<String, Set<String>> map, String key, String element){
+  		 
+  		 if (map.containsKey(key)) {
+  	            Set<String> set = map.get(key);
+  	            set.add(element);
+  	        } else { 
+  	        	Set<String> set = new HashSet<>();
+  	            set.add(element);
+  	        //    eventMap.put(key, set);	 
+       } 
+   
+  	}    */
 //	public void addEvent(ActionEvent event) throws IOException {
 //		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
 //		//Scene3Controller scene3Controller = loader.getController();
