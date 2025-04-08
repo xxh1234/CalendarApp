@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,7 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.time.LocalDate;
@@ -19,8 +20,14 @@ import java.time.YearMonth;
 public class Scene2Controller {
 	
 
+	@FXML 
+	private DatePicker datePicker;
+	
+	@FXML 
+	private TextField eventField;
+	
 	@FXML
-	Button eventButton;
+	private Label statusLabel;
 	
 	@FXML
 	Label nameLabel;
@@ -55,7 +62,6 @@ public class Scene2Controller {
 	    currentYearMonth = YearMonth.now(); 
 	    updateCalendar(currentYearMonth); // Sets to current month & year when initialized 
 	    displayTodayDate();
-	    eventButton.setStyle("-fx-background-color: grey; -fx-text-fill: black;");
 	    
 	}
 	
@@ -140,6 +146,23 @@ public class Scene2Controller {
 		
 	}
 	
+    public void handleAddEvent() {
+        if (datePicker.getValue() == null || eventField.getText().isEmpty()) {
+            statusLabel.setText("Please select a date and enter event details.");
+        } else {
+            String selectedDate = datePicker.getValue().toString();
+            String event = eventField.getText();
+            
+
+            
+            System.out.println("Event on " + selectedDate + ": " + event);
+
+            statusLabel.setText("Event added for " + selectedDate + "!");
+            eventField.clear();
+        }
+
+    }
+	
 	//displayName isn't functioning 04/03.
 	public void displayName(String username) {
 		
@@ -151,27 +174,27 @@ public class Scene2Controller {
 		todayLabel.setText(LocalDate.now().toString());
 		
 	}
-	public void addEvent(ActionEvent event) throws IOException {
-		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
-		//Scene3Controller scene3Controller = loader.getController();
-		//above code is to get data from the scene3 but its not needed here.
-		
-		//code below are for transition
-		//creates a fxmlloader instance and load it with scene3.fxml
-		System.out.println("Event button clicked!");
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene3.fxml"));
-		//loader returns the root node
-		Parent root = loader.load();
-		//cast the button event to node then get the current scene of the current event
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		//creates an new scene
-		Scene scene = new Scene(root);
-		//set the stage with new scene
-		stage.setResizable(false);
-		stage.setScene(scene);
-		stage.show();
-		
-	}
+//	public void addEvent(ActionEvent event) throws IOException {
+//		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
+//		//Scene3Controller scene3Controller = loader.getController();
+//		//above code is to get data from the scene3 but its not needed here.
+//		
+//		//code below are for transition
+//		//creates a fxmlloader instance and load it with scene3.fxml
+//		System.out.println("Event button clicked!");
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene3.fxml"));
+//		//loader returns the root node
+//		Parent root = loader.load();
+//		//cast the button event to node then get the current scene of the current event
+//		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//		//creates an new scene
+//		Scene scene = new Scene(root);
+//		//set the stage with new scene
+//		stage.setResizable(false);
+//		stage.setScene(scene);
+//		stage.show();
+//		
+//	}
 	
 
 }
