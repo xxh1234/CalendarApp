@@ -196,7 +196,6 @@ public class Scene2Controller implements Event {
       eventField.clear();
     //  myEvents.add(event);
      // System.out.println(myEvents);
-     // System.out.println("Date: " + date);
      }   
    
  /*  @Override

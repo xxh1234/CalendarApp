@@ -39,7 +39,8 @@ public class Scene1Controller {
 		String password = passwordField.getText();
 		Boolean validUser = User.userMap.containsKey(username);
 		Boolean validPassword = User.userMap.containsValue(password);
-			
+		userStack.push(username);
+		
 	  if(validUser & validPassword) {
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
