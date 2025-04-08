@@ -19,13 +19,15 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class Scene2Controller {
-	
+public class Scene2Controller implements Event {
+	//
+	static Map<String, Set<String>> eventMap = new HashMap<>();
 
 	@FXML 
 	private DatePicker datePicker;
@@ -182,19 +184,19 @@ public class Scene2Controller {
 		
 	}
 //  @Override
-  /* public void addEvent() {
+    public void addEvent() {
     //  String eventDate = datePicker.getValue().toString();
       LocalDate date = datePicker.getValue();
       String eventDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
       String eventTitle = eventField.getText();
-      String username = Scene1Controller.userStack.peek();
+     // String username = Scene1Controller.userStack.peek();
       String event = (eventDate + ": " + eventTitle);
-      addToSet(eventMap,username,event);
+   //   addToSet(eventMap,username,event);
    //   statusLabel.setText(event);
       eventField.clear();
       //
-      myEvents.add(event);
-      System.out.println(myEvents);
+    //  myEvents.add(event);
+     // System.out.println(myEvents);
       System.out.println("Date: " + date);
      }   
    
@@ -209,9 +211,15 @@ public class Scene2Controller {
 	/*   if (list[0] == null) {  
 		   System.out.println("No events to display");
 	   } */
+
+	@Override
+	public void removeEvent() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 	
- /* 	public void addToSet(Map<String, Set<String>> map, String key, String element){
+ 	public void addToSet(Map<String, Set<String>> map, String key, String element){
   		 
   		 if (map.containsKey(key)) {
   	            Set<String> set = map.get(key);
@@ -219,10 +227,10 @@ public class Scene2Controller {
   	        } else { 
   	        	Set<String> set = new HashSet<>();
   	            set.add(element);
-  	        //    eventMap.put(key, set);	 
+  	            eventMap.put(key, set);	 
        } 
    
-  	}    */
+  	}    
 //	public void addEvent(ActionEvent event) throws IOException {
 //		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
 //		//Scene3Controller scene3Controller = loader.getController();
