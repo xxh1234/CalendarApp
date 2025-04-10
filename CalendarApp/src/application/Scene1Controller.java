@@ -41,15 +41,13 @@ public class Scene1Controller {
 		Boolean validPassword = User.userMap.containsValue(password);
 		userStack.push(username);
 		
-	  if(validUser & validPassword) {
+	  if(validUser && validPassword) {
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
 		
 		root = loader.load();
 		
-		Scene2Controller scene2Controller = loader.getController();
-		
-		scene2Controller.displayName(username);
+		//Scene2Controller scene2Controller = loader.getController();
 			
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
@@ -59,7 +57,7 @@ public class Scene1Controller {
 	}
 	  else {
   
-		 invalidLogin.setText("Invalid username or password.");
+		 invalidLogin.setText("Invalid username or password");
 	} 
 }	
 

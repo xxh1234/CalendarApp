@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -41,7 +42,10 @@
       <Text layoutX="536.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thursday" />
       <Text layoutX="659.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friday" />
       <Text layoutX="762.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saturday" />
-      <Label fx:id="nameLabel" layoutX="972.0" layoutY="761.0" prefHeight="17.0" prefWidth="12.0" />
+      <Label fx:id="nameLabel" alignment="CENTER_RIGHT" layoutX="1013.0" layoutY="23.0" prefHeight="27.0" prefWidth="174.0" textFill="#5f7ea4">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
       <Label fx:id="monthLabel" alignment="CENTER" layoutX="413.0" layoutY="40.0" text="Label">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -56,5 +60,12 @@
       <TextField fx:id="eventField" layoutX="949.0" layoutY="261.0" prefHeight="25.0" prefWidth="174.0" promptText="Event details" />
       <Button layoutX="977.0" layoutY="334.0" mnemonicParsing="false" onAction="#addEvent" text="Click to add event!" />
       <Label fx:id="statusLabel" layoutX="947.0" layoutY="306.0" />
+      <ListView fx:id="eventView" layoutX="936.0" layoutY="463.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label alignment="CENTER" layoutX="936.0" layoutY="410.0" prefHeight="25.0" prefWidth="200.0" text="Upcoming Events">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="removeButton" layoutX="1009.0" layoutY="702.0" mnemonicParsing="false" onAction="#removeEvent" text="Remove" />
    </children>
 </AnchorPane>

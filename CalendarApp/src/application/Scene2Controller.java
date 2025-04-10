@@ -1,33 +1,39 @@
 package application;
 
 import java.io.IOException;
-
+import java.io.Serializable;
 import java.net.URL;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
+import java.io.*;
 
-public class Scene2Controller implements Event {
+
+public class Scene2Controller implements Event, Initializable, Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@FXML 
 	private DatePicker datePicker;
 	
@@ -49,6 +55,14 @@ public class Scene2Controller implements Event {
 	@FXML
 	private GridPane calendarPane;
 	
+	@FXML
+    private ListView<String> eventView;
+    
+    //
+    protected Map<String, Set<String>> eventMap = new HashMap<>();
+    protected String username = Scene1Controller.userStack.peek();
+    protected Set<String> eventSet = new LinkedHashSet<>(Arrays.asList());
+    
 	//this updates the current month to +1
 	@FXML
 	private void nextMonthButton() {
@@ -64,18 +78,9 @@ public class Scene2Controller implements Event {
 	
 	//YearMonth object to display year and month+
 	private YearMonth currentYearMonth;
-	
-	public void initialize() {
-		
-	    currentYearMonth = YearMonth.now(); 
-	    updateCalendar(currentYearMonth); // Sets to current month & year when initialized 
-	    displayTodayDate();
-	    
-	}
-	
+
 	// showCalendar display the dates in the calendar.
 	private void updateCalendar(YearMonth yearMonth) {
-	    
 		
 		calendarPane.getChildren().clear(); //clear pane each time.
 
@@ -86,6 +91,7 @@ public class Scene2Controller implements Event {
 	    int lengthOfMonth = yearMonth.lengthOfMonth();//get the number of days in that month
 	    
 	    int dayOfWeek = firstOfMonth.getDayOfWeek().getValue(); // Monday=1, Sunday=7
+	    
 
 	    // Shift to Sunday=0
 	    int column = dayOfWeek % 7;//to start at the correct day of the week
@@ -104,15 +110,7 @@ public class Scene2Controller implements Event {
 	        
 	        dayButton.setPrefSize(100, 60);
 
-	        //add events here
-	        
-	        dayButton.setOnAction(new buttonHandlerClass(buttonDate));
-	        
-	        
-	        System.out.println("today is = " + buttonDate.toString());
-	        
-	        
-	        //change color to differ even and odd dates.
+	   	    //change color to differ even and odd dates.
 	        if(column%2 != 0) {
 	        	dayButton.setStyle("-fx-background-color: #eae8e4; ");
 	        }
@@ -123,12 +121,9 @@ public class Scene2Controller implements Event {
 	        if(year == todayDate.getYear() && month == todayDate.getMonthValue() && currentDay == todayDate.getDayOfMonth()) {
 	        	dayButton.setStyle("-fx-background-color: #5F7EA4; ");
 	        }
-
-
+	      
 	        calendarPane.add(dayButton, column, row);
-	        
-	        
-
+	        	        
 	        column++;
 	        if (column > 6) {
 	            column = 0;
@@ -148,107 +143,143 @@ public class Scene2Controller implements Event {
 		}
 		@Override
 		public void handle(ActionEvent event) {
-			System.out.println("button clicked" + date);
-			
-		}
-		
+			System.out.println("button clicked" + date);		
+		}	
 	}
 	
-    public void handleAddEvent() {
-        if (datePicker.getValue() == null || eventField.getText().isEmpty()) {
-            statusLabel.setText("Please select a date and enter event details.");
-        } else {
-            String selectedDate = datePicker.getValue().toString();
-            String event = eventField.getText();
-            
-
-            
-            System.out.println("Event on " + selectedDate + ": " + event);
-
-            statusLabel.setText("Event added for " + selectedDate + "!");
-            eventField.clear();
-        }
-
-    }
-	
-	//displayName isn't functioning 04/03.
-	public void displayName(String username) {
+	//displayName 
+    public void displayName() {
 		
-		nameLabel.setText("Hello: "+ username );
-	}
-	
+		nameLabel.setText("Hello, " + username + "!");	
+		
+	} 
+ 
 	public void displayTodayDate() {
 		
-		todayLabel.setText(LocalDate.now().toString());
-		
+		todayLabel.setText(LocalDate.now().toString());	
+	
 	}
-	static Map<String, Set<String>> eventMap = new HashMap<>();
+	
     @Override
     public void addEvent() {
-    //  String eventDate = datePicker.getValue().toString();
       LocalDate date = datePicker.getValue();
       String eventDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-      String eventTitle = eventField.getText();
-      String username = Scene1Controller.userStack.peek();
-      String event = (eventDate + ": " + eventTitle);
+      String eventDetails = eventField.getText();
+      String event = (date.toString() + " " + eventDetails);
+      String viewEvent = (eventDate + ": " + eventDetails);
       addToSet(eventMap,username,event);
-      statusLabel.setText(event);
+      eventView.getItems().add(viewEvent);
+      datePicker.getEditor().clear();
       eventField.clear();
-    //  myEvents.add(event);
-     // System.out.println(myEvents);
-     }   
-   
- /*  @Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-	   
-	// eventView.getItems().addAll(myEvents);
-	// eventView.getItems().add(result);
-	// System.out.println(eventList[0]);
-	 }
-	   
-	/*   if (list[0] == null) {  
-		   System.out.println("No events to display");
-	   } */
-
-	//@Override
-	public void removeEvent() {
-		// TODO Auto-generated method stub
-		
-	}
-		
+      
+    }
+    
  	public void addToSet(Map<String, Set<String>> map, String key, String element){
-  		 
-  		 if (map.containsKey(key)) {
-  	            Set<String> set = map.get(key);
-  	            set.add(element);
-  	        } else { 
-  	        	Set<String> set = new HashSet<>();
-  	            set.add(element);
-  	            eventMap.put(key, set);	 
-       } 
-   
-  	}    
-//	public void addEvent(ActionEvent event) throws IOException {
-//		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
-//		//Scene3Controller scene3Controller = loader.getController();
-//		//above code is to get data from the scene3 but its not needed here.
-//		
-//		//code below are for transition
-//		//creates a fxmlloader instance and load it with scene3.fxml
-//		System.out.println("Event button clicked!");
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene3.fxml"));
-//		//loader returns the root node
-//		Parent root = loader.load();
-//		//cast the button event to node then get the current scene of the current event
-//		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//		//creates an new scene
-//		Scene scene = new Scene(root);
-//		//set the stage with new scene
-//		stage.setResizable(false);
-//		stage.setScene(scene);
-//		stage.show();
-//		
-//	}
-	
+ 			
+          eventMap.put(key, eventSet);
+          eventSet.add(element);
+          System.out.println(eventMap);
+          ArrayList<String> eventList = new ArrayList<>(eventSet);
+      //    listToFile(eventList,eventFile);
+          System.out.println("Set to Arraylist" + eventList);
+            
+ 	}
+ 	//Transfer ArrayList to serialized file
+ 	String eventFile = "eventlist.ser";
+    LocalDateTime dateTime = LocalDateTime.now();
+    String timestamp = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+ 	
+ 	public void listToFile (ArrayList<String> list, String filePath) {
+ 		
+ 	  try (FileOutputStream fileOut = new FileOutputStream(filePath);
+              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
+             // Write the ArrayList to the file
+             objectOut.writeObject(list);
+             System.out.println(timestamp + ": ArrayList serialized and saved to " + filePath);
+             
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+}
+ 	//Append events to serialized file
+ /*	public void appendToFile (ArrayList<String> list, String filePath) {
+ 		
+ 	 	  try (FileOutputStream fileOut = new FileOutputStream(filePath);
+ 	              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+ 	             // Write the ArrayList to the file
+ 	             objectOut.writeObject(list);
+ 	             System.out.println(timestamp + ": ArrayList serialized and saved to " + filePath);
+ 	             
+ 	         } catch (IOException e) {
+ 	             e.printStackTrace();
+ 	         }
+ 	} */
+ 	//Retrieve ArrayList from serialized file	
+ 	public ArrayList<String> listfromFile (String filePath) {
+ 		
+ 		ArrayList<String> retrievedEventList = null; 	
+ 		
+ 	 	  try (FileInputStream fileIn = new FileInputStream(filePath);
+ 	              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+
+ 	             // Read ArrayList from the file
+ 	 		  	 retrievedEventList = (ArrayList<String>) objectIn.readObject();
+ 	             System.out.println(timestamp + ": ArrayList retrieved from: " + filePath);            
+
+ 	         } catch (IOException | ClassNotFoundException e) {
+ 	             e.printStackTrace();
+ 	             
+ 	         }
+ 	 	  return retrievedEventList;
+ 	} 
+    //Check for events on current day
+    ArrayList<String> loadEvents = listfromFile(eventFile);
+ 	public void displayEvents(ArrayList<String> list) {
+ 		
+ 		LocalDate todayDate = LocalDate.now();
+ 		
+ 		for (String e : list) {
+ 			
+ 			eventView.getItems().add(e);
+ 		}
+ 		
+ 	/*	for (String e : list) {
+	        	if (e.contains(todayDate.toString())) { 
+	        		eventView.getItems().add("There are events today!"); 
+	             //   System.out.println("There are events today!");      		
+	        	} else 
+	        		
+	        		eventView.getItems().add("No events today!");
+ 		}	*/		
+ 		
+ 	}			 
+ 	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+ 		
+ 		currentYearMonth = YearMonth.now(); 
+ 	    updateCalendar(currentYearMonth); // Sets to current month & year when initialized 
+ 	    displayTodayDate(); 
+	    displayName();
+	//  displayEvents(loadEvents);    
+	    
+ 	}  
+
+	@Override
+	public void removeEvent() {
+		int index = eventView.getSelectionModel().getSelectedIndex();
+		eventView.getItems().remove(index);
+		removeFromSet(eventMap,username,index);
+	}
+	public void removeFromSet(Map<String, Set<String>> map, String key, int index){
+		
+		 ArrayList<String> removeEventList = new ArrayList<>(eventSet);
+	     removeEventList.remove(index);
+	     eventSet = new LinkedHashSet<>(removeEventList);  
+	     eventMap.put(key, eventSet);
+	     System.out.println(eventSet);
+	     System.out.println(eventMap);
+	}
+	   
 }

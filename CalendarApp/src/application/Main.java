@@ -12,9 +12,9 @@ public class Main extends Application{
 	public static void main(String[] args){
 		
 		//Users
-		User CortlandB = new User("smoothcjb", "password1");
-		User DiyaP = new User("diyap1234", "password2");
-		User XinhaoX = new User("xxh", "");
+		User smoothcjb = new User("smoothcjb", "password1");
+		User diyap = new User("diyap1234", "password2");
+		User xxh = new User("xxh", "");
 		
 	
 		launch(args);
