@@ -57,6 +57,10 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	
 	@FXML
     private ListView<String> eventView;
+	
+	@FXML
+	private Label alertLabel;
+	
     
     //
     protected Map<String, Set<String>> eventMap = new HashMap<>();
@@ -160,6 +164,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	
     @Override
     public void addEvent() {
+    	
       LocalDate date = datePicker.getValue();
       String eventDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
       String eventDetails = eventField.getText();
@@ -168,18 +173,12 @@ public class Scene2Controller implements Event, Initializable, Serializable {
       addToSet(eventMap,username,event);
       eventView.getItems().add(viewEvent);
       datePicker.getEditor().clear();
-      eventField.clear();
-      
+      eventField.clear(); 
     }
-    
+    // Add events to Set
  	public void addToSet(Map<String, Set<String>> map, String key, String element){
- 			
-      //    eventMap.put(key, eventSet);
-      //    eventSet.add(element);
-      //    System.out.println("Old" + eventMap);
-          //ArrayList<String> eventList = new ArrayList<>(eventSet);
+ 	
          ArrayList<String> eventList = new ArrayList<>(loadEvents);
-         System.out.println("eventList: " + eventList);
          eventList.add(element);
          listToFile(eventList,eventFile);
  	     eventSet = new LinkedHashSet<>(eventList);  
@@ -232,18 +231,33 @@ public class Scene2Controller implements Event, Initializable, Serializable {
  			
  			eventView.getItems().add(e);
  		}	
-	        	
- 	}	
+ 	}
+
  	//LocalDate todayDate = LocalDate.now();
- /*		if (e.contains(todayDate.toString()) && count <= 1) { 
-    		eventView.getItems().add("There are events today!"); 
-    		count ++;
-         //   System.out.println("There are events today!");      		
-    	} else 
-    		
-    		eventView.getItems().add("No events today!");
-	}		
- 	}	*/		 
+ 	public void checkCurrentDay(ArrayList<String> list) {
+ 		
+ 	LocalDate currentDate = LocalDate.now();
+ 	String targetDate = currentDate.toString();
+ 	System.out.println(currentDate);
+ 	System.out.println("loadEvents" + loadEvents);
+ 	
+ 	 int count = 0;
+ 	 System.out.println(count);
+ 	 for (String e : list) {
+ 	 String[] dates = e.split(" ");
+     for (String date : dates) {
+         if (date.equals(targetDate)) {
+        	 count++;
+        	 if(count == 1) {
+        		 alertLabel.setText("You have " + count + " event today!");
+        	 } else {
+        		 alertLabel.setText("You have " + count + " events today!");
+         }
+     }
+     }
+  }
+ 	 }
+ 	
  	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
  		
@@ -251,7 +265,8 @@ public class Scene2Controller implements Event, Initializable, Serializable {
  	    updateCalendar(currentYearMonth); // Sets to current month & year when initialized 
  	    displayTodayDate(); 
 	    displayName();
-	    displayEvents(loadEvents);      
+	    displayEvents(loadEvents);
+	    checkCurrentDay(loadEvents);	    
  	}  
 
 	@Override
@@ -263,12 +278,10 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	public void removeFromSet(Map<String, Set<String>> map, String key, int index){
 		
 		 ArrayList<String> removeEventList = new ArrayList<>(loadEvents);
-		 System.out.println("from eventlist.ser" + removeEventList);
 	     removeEventList.remove(index);
 	     eventSet = new LinkedHashSet<>(removeEventList);  
 	     listToFile(removeEventList,eventFile);
 	     eventMap.put(key, eventSet);
-	     System.out.println(eventSet);
 	     System.out.println(eventMap);
 	}   
 } 

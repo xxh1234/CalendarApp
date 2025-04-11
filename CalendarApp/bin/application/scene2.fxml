@@ -67,5 +67,6 @@
          </font>
       </Label>
       <Button fx:id="removeButton" layoutX="1009.0" layoutY="702.0" mnemonicParsing="false" onAction="#removeEvent" text="Remove" />
+      <Label fx:id="alertLabel" alignment="CENTER_RIGHT" layoutX="390.0" layoutY="15.0" prefHeight="17.0" prefWidth="106.0" text=" " textFill="RED" />
    </children>
 </AnchorPane>
