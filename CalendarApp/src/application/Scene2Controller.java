@@ -150,14 +150,12 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	//displayName 
     public void displayName() {
 		
-		nameLabel.setText("Hello, " + username + "!");	
-		
+		nameLabel.setText("Hello, " + username + "!");			
 	} 
  
 	public void displayTodayDate() {
 		
 		todayLabel.setText(LocalDate.now().toString());	
-	
 	}
 	
     @Override
@@ -176,57 +174,49 @@ public class Scene2Controller implements Event, Initializable, Serializable {
     
  	public void addToSet(Map<String, Set<String>> map, String key, String element){
  			
-          eventMap.put(key, eventSet);
-          eventSet.add(element);
-          System.out.println(eventMap);
-          ArrayList<String> eventList = new ArrayList<>(eventSet);
-      //    listToFile(eventList,eventFile);
-          System.out.println("Set to Arraylist" + eventList);
-            
+      //    eventMap.put(key, eventSet);
+      //    eventSet.add(element);
+      //    System.out.println("Old" + eventMap);
+          //ArrayList<String> eventList = new ArrayList<>(eventSet);
+         ArrayList<String> eventList = new ArrayList<>(loadEvents);
+         System.out.println("eventList: " + eventList);
+         eventList.add(element);
+         listToFile(eventList,eventFile);
+ 	     eventSet = new LinkedHashSet<>(eventList);  
+ 	     eventMap.put(key, eventSet);
+ 	     System.out.println(eventMap);   
  	}
- 	//Transfer ArrayList to serialized file
+ 	//Copy ArrayList to serialized file
  	String eventFile = "eventlist.ser";
     LocalDateTime dateTime = LocalDateTime.now();
     String timestamp = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
  	
- 	public void listToFile (ArrayList<String> list, String filePath) {
+ 	public void listToFile (ArrayList<String> list, String fileName) {
  		
- 	  try (FileOutputStream fileOut = new FileOutputStream(filePath);
+ 	  try (FileOutputStream fileOut = new FileOutputStream(fileName);
               ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
              // Write the ArrayList to the file
              objectOut.writeObject(list);
-             System.out.println(timestamp + ": ArrayList serialized and saved to " + filePath);
+             System.out.println(timestamp + ": ArrayList serialized and saved to " + fileName);
              
          } catch (IOException e) {
              e.printStackTrace();
          }
 }
- 	//Append events to serialized file
- /*	public void appendToFile (ArrayList<String> list, String filePath) {
- 		
- 	 	  try (FileOutputStream fileOut = new FileOutputStream(filePath);
- 	              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-
- 	             // Write the ArrayList to the file
- 	             objectOut.writeObject(list);
- 	             System.out.println(timestamp + ": ArrayList serialized and saved to " + filePath);
- 	             
- 	         } catch (IOException e) {
- 	             e.printStackTrace();
- 	         }
- 	} */
+ 	
  	//Retrieve ArrayList from serialized file	
- 	public ArrayList<String> listfromFile (String filePath) {
+ 	@SuppressWarnings("unchecked")
+	public ArrayList<String> listfromFile (String fileName) {
  		
  		ArrayList<String> retrievedEventList = null; 	
  		
- 	 	  try (FileInputStream fileIn = new FileInputStream(filePath);
+ 	 	  try (FileInputStream fileIn = new FileInputStream(fileName);
  	              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
 
  	             // Read ArrayList from the file
  	 		  	 retrievedEventList = (ArrayList<String>) objectIn.readObject();
- 	             System.out.println(timestamp + ": ArrayList retrieved from: " + filePath);            
+ 	             System.out.println(timestamp + ": ArrayList retrieved from: " + fileName);            
 
  	         } catch (IOException | ClassNotFoundException e) {
  	             e.printStackTrace();
@@ -234,27 +224,26 @@ public class Scene2Controller implements Event, Initializable, Serializable {
  	         }
  	 	  return retrievedEventList;
  	} 
-    //Check for events on current day
+    //Display events in ListView
     ArrayList<String> loadEvents = listfromFile(eventFile);
  	public void displayEvents(ArrayList<String> list) {
- 		
- 		LocalDate todayDate = LocalDate.now();
  		
  		for (String e : list) {
  			
  			eventView.getItems().add(e);
- 		}
- 		
- 	/*	for (String e : list) {
-	        	if (e.contains(todayDate.toString())) { 
-	        		eventView.getItems().add("There are events today!"); 
-	             //   System.out.println("There are events today!");      		
-	        	} else 
-	        		
-	        		eventView.getItems().add("No events today!");
- 		}	*/		
- 		
- 	}			 
+ 		}	
+	        	
+ 	}	
+ 	//LocalDate todayDate = LocalDate.now();
+ /*		if (e.contains(todayDate.toString()) && count <= 1) { 
+    		eventView.getItems().add("There are events today!"); 
+    		count ++;
+         //   System.out.println("There are events today!");      		
+    	} else 
+    		
+    		eventView.getItems().add("No events today!");
+	}		
+ 	}	*/		 
  	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
  		
@@ -262,8 +251,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
  	    updateCalendar(currentYearMonth); // Sets to current month & year when initialized 
  	    displayTodayDate(); 
 	    displayName();
-	//  displayEvents(loadEvents);    
-	    
+	    displayEvents(loadEvents);      
  	}  
 
 	@Override
@@ -274,12 +262,13 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	}
 	public void removeFromSet(Map<String, Set<String>> map, String key, int index){
 		
-		 ArrayList<String> removeEventList = new ArrayList<>(eventSet);
+		 ArrayList<String> removeEventList = new ArrayList<>(loadEvents);
+		 System.out.println("from eventlist.ser" + removeEventList);
 	     removeEventList.remove(index);
 	     eventSet = new LinkedHashSet<>(removeEventList);  
+	     listToFile(removeEventList,eventFile);
 	     eventMap.put(key, eventSet);
 	     System.out.println(eventSet);
 	     System.out.println(eventMap);
-	}
-	   
-}
+	}   
+} 
