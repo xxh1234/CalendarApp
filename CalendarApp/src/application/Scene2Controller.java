@@ -171,7 +171,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
       String event = (date.toString() + " " + eventDetails);
       String viewEvent = (eventDate + ": " + eventDetails);
       addToSet(eventMap,username,event);
-      eventView.getItems().add(viewEvent);
+      eventView.getItems().add(event);
       datePicker.getEditor().clear();
       eventField.clear(); 
     }
@@ -188,7 +188,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
  	//Copy ArrayList to serialized file
  	String eventFile = "eventlist.ser";
     LocalDateTime dateTime = LocalDateTime.now();
-    String timestamp = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    String timestamp = dateTime.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
  	
  	public void listToFile (ArrayList<String> list, String fileName) {
  		
@@ -238,11 +238,8 @@ public class Scene2Controller implements Event, Initializable, Serializable {
  		
  	LocalDate currentDate = LocalDate.now();
  	String targetDate = currentDate.toString();
- 	System.out.println(currentDate);
- 	System.out.println("loadEvents" + loadEvents);
- 	
+ 	 	
  	 int count = 0;
- 	 System.out.println(count);
  	 for (String e : list) {
  	 String[] dates = e.split(" ");
      for (String date : dates) {
