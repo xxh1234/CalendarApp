@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="300" prefWidth="400" spacing="15" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Scene3Controller">
+<VBox alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" spacing="15" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Scene3Controller">
       
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
@@ -16,7 +16,7 @@
     <Label style="-fx-font-size: 18px;" text="Add Event" />
 
     <DatePicker fx:id="datePicker" promptText="Select Date" />
-    <TextField fx:id="eventField" promptText="Event Details" />
+    <TextField fx:id="eventField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Event Details" />
     <Button onAction="#handleAddEvent" text="Add Event" />
     <Label fx:id="statusLabel" text="" />
    <Button fx:id="backToCalendar" mnemonicParsing="false" onAction="#goBackToCalendar" text="Back to calendar" />

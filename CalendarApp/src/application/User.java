@@ -1,13 +1,15 @@
 package application;
 
 import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 public class User {
 	
 	private String username;
 	private String password;
 	protected static Map<String, String> userMap = new HashMap<>();
+	//protected Set<String> eventSet = new HashSet<>();
 	
 	public User(String username, String password) {
 		

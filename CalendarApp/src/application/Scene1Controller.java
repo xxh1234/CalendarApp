@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ public class Scene1Controller {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	static Stack <String> userStack = new Stack<>();
 	
 	public void login(ActionEvent event) throws IOException {
 		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
@@ -37,22 +39,25 @@ public class Scene1Controller {
 		String password = passwordField.getText();
 		Boolean validUser = User.userMap.containsKey(username);
 		Boolean validPassword = User.userMap.containsValue(password);
-			
-	  if(validUser & validPassword) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
-		root = loader.load();
-		Scene2Controller scene2Controller = loader.getController();
+		userStack.push(username);
 		
-		scene2Controller.displayName(username);
+	  if(validUser && validPassword) {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
+		
+		root = loader.load();
+		
+		//Scene2Controller scene2Controller = loader.getController();
 			
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();			
 	}
 	  else {
   
-		 invalidLogin.setText("Invalid username or password.");
+		 invalidLogin.setText("Invalid username or password");
 	} 
 }	
 
