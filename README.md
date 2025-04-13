@@ -33,8 +33,12 @@ change VM arguments to --module-path [JavaFX directory in your local drive] --ad
 Click on run(a small green play button on the top bar) if you don't see any error and an app screen should popup displaying the login page of the app. If you see any errors
 Please scroll down to see the troubleshooting page.
 ### Default user ###
-- In the login page you can use one of our three default users or you can add [User (your name) = new User("your username", "your password");] in the main file under //users
+- In the login page you can use one of our three default users "smoothcjb", "password1" "diyap1234", "password2","xxh", ""or you can add [User (your name) = new User("your username", "your password");] in the main file under //users
+- Type in your credentials then click view calendar, an error will show up if the password/username is incorrect.
 - Once you have successfully logged in you can enjoy the convenience of viewing our calendar, add and remove events at your own convenience!
+- You can change the month by clicking on previous month or next month button. 
+- You can select a date then put in the details of an event then click on "Click to add event!" your event will show up in the upcoming events list view.
+- You can remove an existing event by selecting the event and click remove.
 
 ## Common Issue That Might Happen ##
 - All the file has error (fix: Make sure that you import the correct library for your build path.) 
