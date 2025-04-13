@@ -44,13 +44,27 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	private Label statusLabel;
 	
 	@FXML
-	Label nameLabel;
+	private Label nameLabel;
 	
 	@FXML
-	Label monthLabel;
+	private Label monthLabel;
 	
 	@FXML
-	Label todayLabel;
+	private Label todayLabel;
+	
+	//this updates the current month to +1
+	@FXML
+	private void nextMonthButton() {
+	    currentYearMonth = currentYearMonth.plusMonths(1);
+	    updateCalendar(currentYearMonth);
+	}
+	//this updates the current month to -1
+	@FXML
+	private void previousMonthButton() {
+	    currentYearMonth = currentYearMonth.minusMonths(1);
+	    updateCalendar(currentYearMonth);
+	}
+	
 	
 	@FXML
 	private GridPane calendarPane;
@@ -68,17 +82,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
     protected Set<String> eventSet = new LinkedHashSet<>(Arrays.asList());
     
 	//this updates the current month to +1
-	@FXML
-	private void nextMonthButton() {
-	    currentYearMonth = currentYearMonth.plusMonths(1);
-	    updateCalendar(currentYearMonth);
-	}
-	//this updates the current month to -1
-	@FXML
-	private void previousMonthButton() {
-	    currentYearMonth = currentYearMonth.minusMonths(1);
-	    updateCalendar(currentYearMonth);
-	}
+	
 	
 	//YearMonth object to display year and month+
 	private YearMonth currentYearMonth;
@@ -111,7 +115,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	    	LocalDate buttonDate = LocalDate.of(year, month, currentDay);
 	    	
 	        Button dayButton = new Button(String.valueOf(day));
-	        
+	        //change the size of the button and their gap.
 	        dayButton.setPrefSize(100, 60);
 
 	   	    //change color to differ even and odd dates.
@@ -138,18 +142,7 @@ public class Scene2Controller implements Event, Initializable, Serializable {
 	    // Update label to show selected month & year
 	    monthLabel.setText(yearMonth.getMonth() + " " + yearMonth.getYear());
 	}
-	
-	class buttonHandlerClass implements EventHandler<ActionEvent>{
-		private LocalDate date;
-		
-		public buttonHandlerClass(LocalDate date) {
-			this.date = date;
-		}
-		@Override
-		public void handle(ActionEvent event) {
-			System.out.println("button clicked" + date);		
-		}	
-	}
+	//this updates the current month to +1
 	
 	//displayName 
     public void displayName() {
