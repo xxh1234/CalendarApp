@@ -39,7 +39,7 @@ Please scroll down to see the troubleshooting page.
 - You can change the month by clicking on previous month or next month button. 
 - You can select a date then put in the details of an event then click on "Click to add event!" your event will show up in the upcoming events list view.
 - You can remove an existing event by selecting the event and click remove.
-## What  ##
+
 ## Common Issue That Might Happen ##
 - All the file has error (fix: Make sure that you import the correct library for your build path.) 
 - JavaFx error (fix: Make sure in your run configuration you
