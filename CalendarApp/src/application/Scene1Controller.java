@@ -33,7 +33,7 @@ public class Scene1Controller {
 	static Stack <String> userStack = new Stack<>();
 	
 	public void login(ActionEvent event) throws IOException {
-		//root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
+		
 		
 		String username = nameTextField.getText();
 		String password = passwordField.getText();
@@ -47,7 +47,7 @@ public class Scene1Controller {
 		
 		root = loader.load();
 		
-		//Scene2Controller scene2Controller = loader.getController();
+		
 			
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
